@@ -1,0 +1,11 @@
+version: '3'
+services:
+  amazonlinux:
+    build:
+      context: .
+      args:
+        NVM_VERSION: v0.33.1
+        NODE_VERSION: v6.10.2
+    volumes:
+      - .:/tmp/lambda_build
+    command: ['bash', '-c', 'cd /tmp/lambda_build && npm install']

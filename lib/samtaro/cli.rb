@@ -52,12 +52,22 @@ module Samtaro
 
     class Build
       def run(argv)
-        puts 'hoge'
+        parse!(argv)
+
+        if @verbose
+          Samtaro.logger.level = Logger::DEBUG
+        end
+
+        builder= Builder.new(
+          runtime: @runtime,
+          directory: @directory,
+          logger: Samtaro.logger,
+        )
+        builder.build
       end
 
       def parse!(argv)
         @verbose = false
-        @template_file = 'template.yml'
         parser.parse!(argv)
       end
 
@@ -65,7 +75,8 @@ module Samtaro
         @parser ||= OptionParser.new do |opts|
           opts.banner = 'samtaro build [OPTIONS]'
           opts.version = VERSION
-          opts.on('-t', '--template-file', 'Target CFn template') { |t| @template_file = t }
+          opts.on('-d', '--directory=DIRECTORY', 'Target directory') { |d| @directory = d }
+          opts.on('-r', '--runtime=RUNTIME', 'Runtime') { |r| @runtime = r }
           opts.on('-v', '--verbose', 'Enable verbose mode') { @verbose = true }
         end
       end
