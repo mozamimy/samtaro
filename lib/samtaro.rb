@@ -1,5 +1,4 @@
-require "samtaro/version"
+require 'samtaro/cli'
+require 'samtaro/version'
 
-module Samtaro
-  # Your code goes here...
-end
+module Samtaro; end
