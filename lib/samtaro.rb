@@ -1,4 +1,5 @@
 require 'samtaro/cli'
+require 'samtaro/cli/build'
 require 'samtaro/builder'
 require 'samtaro/version'
 
