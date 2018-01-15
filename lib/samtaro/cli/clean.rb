@@ -4,7 +4,7 @@ require 'optparse'
 
 module Samtaro
   class CLI
-    class Build
+    class Clean
       def run(argv)
         parse!(argv)
 
@@ -12,27 +12,26 @@ module Samtaro
           Samtaro.logger.level = Logger::DEBUG
         end
 
-        builder = Builder.new(
-          source_dir: @source_dir || Samtaro::DEFAULT_SRC_DIR,
+        cleaner = Cleaner.new(
           artifact_dir: @artifact_dir || Samtaro::DEFAULT_ARTIFACT_DIR,
-          runtime: @runtime || Samtaro::DEFAULT_RUNTIME,
+          assume_yes: @assume_yes,
           logger: Samtaro.logger,
         )
-        builder.build
+        cleaner.clean
       end
 
       def parse!(argv)
         @verbose = false
+        @assume_yes = false
         parser.parse!(argv)
       end
 
       def parser
         @parser ||= OptionParser.new do |opts|
-          opts.banner = 'samtaro build [OPTIONS]'
+          opts.banner = 'samtaro clean [OPTIONS]'
           opts.version = VERSION
           opts.on('-a', '--artifact-directory=DIRECTORY', 'Artifact directory') { |a| @artifact_dir = a }
-          opts.on('-r', '--runtime=RUNTIME', 'Runtime') { |r| @runtime = r }
-          opts.on('-s', '--source-directory=DIRECTORY', 'Source directory') { |s| @source_dir = d }
+          opts.on('-y', '--assumeyes', 'Do not confirm when delete a directory') { |y| @assume_yes = y }
           opts.on('-v', '--verbose', 'Enable verbose mode') { @verbose = true }
         end
       end

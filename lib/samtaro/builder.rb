@@ -70,7 +70,7 @@ module Samtaro
           end
         end
 
-        @logger.debug(Dir.entries('.'))
+        @logger.info('Done.')
       end
     end
   end

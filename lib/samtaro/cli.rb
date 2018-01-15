@@ -8,6 +8,7 @@ module Samtaro
   class CLI
     SUB_COMMANDS = %w[
       build
+      clean
     ].freeze
 
     def self.start(argv)
